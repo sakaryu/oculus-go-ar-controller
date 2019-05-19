@@ -13,6 +13,42 @@
         <a-obj-model id="oculus_controller" src="#oculus_controller-obj" position="0 1 0" scale="1 1 1" rotation="0 180 0"></a-obj-model>
     </a-marker>
     <a-entity camera></a-entity>
+    <div class="ui">
+        <button id="button_a">button</button>
+    </div>
 </a-scene>
 </body>
+<style>
+    .ui {
+        position: absolute;
+        z-index: 100;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        margin: 0;
+        padding: 10px 15px 30px;
+        text-align: center;
+        box-sizing: border-box;
+    }
+</style>
+<script>
+    const buttonA = document.getElementById("button_a");
+    const oculusController = document.getElementById("oculus_controller");
+    const oculusControllerObj = oculusController.object3D;
+    function tick(pos) {
+        let cameraObj = oculusControllerObj.parent;
+        let x = cameraObj.position.x - pos.x;
+        let y = cameraObj.position.y - pos.y;
+        oculusControllerObj.position.x = x;
+        oculusControllerObj.position.y = y;
+        // console.log(oculusControllerObj.position);
+        requestAnimationFrame(tick(pos));
+    };
+    buttonA.onclick = function(){
+        let cameraObj = oculusControllerObj.parent;
+        tick(cameraObj.position);
+    };
+
+</script>
 </html>
