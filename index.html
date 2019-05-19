@@ -36,21 +36,20 @@
     const buttonA = document.getElementById("button_a");
     const oculusController = document.getElementById("oculus_controller");
     const oculusControllerObj = oculusController.object3D;
-    function tick(pos) {
+    function tick(pos_x, pos_y, pos_z) {
         let cameraObj = oculusControllerObj.parent;
-        let x = cameraObj.position.x - pos.x;
-        let y = cameraObj.position.y - pos.y;
-        oculusControllerObj.position.x = x;
-        oculusControllerObj.position.y = y;
+        oculusControllerObj.position.x = -(cameraObj.position.x - pos_x);
+        oculusControllerObj.position.y = -(cameraObj.position.z - pos_z);
+        oculusControllerObj.position.z = cameraObj.position.y - pos_y;
         // console.log(oculusControllerObj.position);
         setTimeout(function () {
             // requestAnimationFrame(tick(pos));
-            tick(pos);
+            tick(pos_x, pos_y, pos_z);
         }, 0);
     };
     buttonA.onclick = function(){
         let cameraObj = oculusControllerObj.parent;
-        tick(cameraObj.position);
+        tick(cameraObj.position.x, cameraObj.position.y, cameraObj.position.z);
     };
 
 </script>
