@@ -1,5 +1,6 @@
 <!doctype HTML>
-<html>
+<html lang="ja">
+<meta http-equiv="content-type" charset="utf-8">
 <!-- A-Frame ライブラリの読み込み -->
 <script src="https://aframe.io/releases/0.9.1/aframe.min.js"></script>
 <!-- AR.js ライブラリの読み込み -->
@@ -14,7 +15,7 @@
     </a-marker>
     <a-entity camera></a-entity>
     <div class="ui">
-        <button id="button_a">button</button>
+        <button id="toggle_button">もつ</button>
     </div>
 </a-scene>
 </body>
@@ -33,23 +34,32 @@
     }
 </style>
 <script>
-    const buttonA = document.getElementById("button_a");
+    const toggleButton = document.getElementById("toggle_button");
+    let toggleFlag = false;
     const oculusController = document.getElementById("oculus_controller");
     const oculusControllerObj = oculusController.object3D;
     function tick(pos_x, pos_y, pos_z) {
+        if(!toggleFlag){
+            return;
+        }
         let cameraObj = oculusControllerObj.parent;
         oculusControllerObj.position.x = -(cameraObj.position.x - pos_x);
         oculusControllerObj.position.y = -(cameraObj.position.z - pos_z);
         oculusControllerObj.position.z = cameraObj.position.y - pos_y;
-        // console.log(oculusControllerObj.position);
         setTimeout(function () {
-            // requestAnimationFrame(tick(pos));
             tick(pos_x, pos_y, pos_z);
         }, 0);
     };
-    buttonA.onclick = function(){
-        let cameraObj = oculusControllerObj.parent;
-        tick(cameraObj.position.x, cameraObj.position.y, cameraObj.position.z);
+    toggleButton.onclick = function(){
+        if(toggleFlag){
+            toggleFlag = false;
+            toggleButton.textContent = "もつ";
+        } else {
+            let cameraObj = oculusControllerObj.parent;
+            toggleFlag = true;
+            toggleButton.textContent = "はなす";
+            tick(cameraObj.position.x, cameraObj.position.y, cameraObj.position.z);
+        }
     };
 
 </script>
