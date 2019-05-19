@@ -43,7 +43,10 @@
         oculusControllerObj.position.x = x;
         oculusControllerObj.position.y = y;
         // console.log(oculusControllerObj.position);
-        requestAnimationFrame(tick(pos));
+        setTimeout(function () {
+            // requestAnimationFrame(tick(pos));
+            tick(pos);
+        }, 0);
     };
     buttonA.onclick = function(){
         let cameraObj = oculusControllerObj.parent;
