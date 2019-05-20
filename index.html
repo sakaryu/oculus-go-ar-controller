@@ -11,7 +11,7 @@
         <a-asset-item id="oculus_controller-obj" src="model_obj/oculus_controller.obj"></a-asset-item>
     </a-assets>
     <a-marker preset="hiro">
-        <a-obj-model id="oculus_controller" src="#oculus_controller-obj" position="0 1 0" scale="1 1 1" rotation="0 180 0"></a-obj-model>
+        <a-obj-model id="oculus_controller" src="#oculus_controller-obj" position="0 0.1 -0.5" scale="1 1 1" rotation="0 180 0"></a-obj-model>
     </a-marker>
     <a-entity camera></a-entity>
     <div class="ui">
@@ -40,6 +40,9 @@
     const oculusControllerObj = oculusController.object3D;
     function tick(pos_x, pos_y, pos_z) {
         if(!toggleFlag){
+            oculusControllerObj.position.x = 0;
+            oculusControllerObj.position.y = 0.1;
+            oculusControllerObj.position.z = -0.5;
             return;
         }
         let cameraObj = oculusControllerObj.parent;
